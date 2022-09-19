@@ -1,1 +1,7 @@
-<p>home works!</p>
+<div class="home-container">
+    <h1>Veja o que compartilharam!</h1>
+    <!-- buscar algo especifico (getID) -->
+    <div *ngFor="let moment of moments">
+        <h2>{{moment.title}}</h2>
+    </div>
+</div>
