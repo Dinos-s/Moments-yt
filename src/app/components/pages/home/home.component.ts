@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
     this.moments = this.allMoments.filter((moment) => {
       return moment.title.toLowerCase().includes(vaule);
-    })
+    }) //retorna o valor da buca;
   }
 
 }

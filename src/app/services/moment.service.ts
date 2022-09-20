@@ -18,6 +18,11 @@ export class MomentService {
     return this.http.get<IResponse<IMoment[]>>(this.apiUrl)
   }//pega todos os momentos cadastros;
 
+  getMoment(id: number): Observable<IResponse<IMoment>> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<IResponse<IMoment>>(url)
+  }
+
   createMoment(formData: FormData): Observable<FormData>{
     return this.http.post<FormData>(this.apiUrl, formData)
   }//cria um momento no DB;
