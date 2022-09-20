@@ -13,7 +13,10 @@ export class HomeComponent implements OnInit {
 
   allMoments: IMoment[] = [];
   moments: IMoment[] = [];
-  baseApiUrl = environment.baseApiUrl
+  baseApiUrl = environment.baseApiUrl;
+
+  faSearch = faSearch;
+  searchTerm: string = '';
 
   constructor(private momentService: MomentService) { }
 
@@ -28,6 +31,15 @@ export class HomeComponent implements OnInit {
 
       this.allMoments = data;//recebendo a data modificada;
       this.moments = data;
+    })
+  }
+
+  search(e: Event): void {
+    const target = e.target as HTMLInputElement;
+    const vaule = target.value;
+
+    this.moments = this.allMoments.filter((moment) => {
+      return moment.title.toLowerCase().includes(vaule);
     })
   }
 
