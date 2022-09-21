@@ -21,9 +21,14 @@ export class MomentService {
   getMoment(id: number): Observable<IResponse<IMoment>> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<IResponse<IMoment>>(url)
-  }
+  }//pega um momento especifico;
 
   createMoment(formData: FormData): Observable<FormData>{
     return this.http.post<FormData>(this.apiUrl, formData)
   }//cria um momento no DB;
+
+  removeMoment(id: number){
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
+  }//deletando dado do BD
 }
