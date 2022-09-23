@@ -8,8 +8,9 @@ import { IMoment } from 'src/app/IMoment';
   styleUrls: ['./moment-form.component.css']
 })
 export class MomentFormComponent implements OnInit {
-  @Output() onSubmit = new EventEmitter<IMoment>
-  @Input() btnText!: string
+  @Output() onSubmit = new EventEmitter<IMoment>();
+  @Input() btnText!: string;
+  @Input() momentData: IMoment | null = null;
 
   momentForm!: FormGroup;
 
