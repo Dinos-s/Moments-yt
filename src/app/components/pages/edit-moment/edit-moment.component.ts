@@ -13,19 +13,19 @@ export class EditMomentComponent implements OnInit {
   moment!: IMoment;
   btnText: string = "Editar";
 
-  constructor(private momentService: MomentService, private route: ActivatedRoute, private messageService: MessagesService, private router: Router) { }
+  constructor(private momentService: MomentService, private route: ActivatedRoute, private messagesService: MessagesService, private router: Router) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get("id"));
 
-    this.momentService.getMoment(id).subscribe((item)=>{
+    this.momentService.getMoment(id).subscribe((item) => {
       this.moment = item.data;
     })
   }
 
   async editHandler(momentData: IMoment) {
     const id = this.moment.id
-    const formData = new FormData()
+    const formData = new FormData();
 
     formData.append('title', momentData.title);
     formData.append('description', momentData.description);
@@ -36,7 +36,7 @@ export class EditMomentComponent implements OnInit {
 
     await this.momentService.updateMoment(id!, formData).subscribe()
 
-    this.messageService.add(`Moment ${id} atualizado`)
+    this.messagesService.add(`Moment ${id} atualizado`)
 
     this.router.navigate(['/'])
   }

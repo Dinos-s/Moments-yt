@@ -15,6 +15,37 @@
         </button>
     </div>
     <div class="comments">
-        <h3>Comentários (0):</h3>
+        <h3>Comentários ({{moment.comments!.length > 0 ? moment.comments!.length : 0}}):</h3>
+        <div *ngIf="moment.comments!.length > 0; else noComments">
+            <div class="comment-container" *ngFor="let comment of moment.comments">
+                <p class="comment">{{ comment.text }}</p>
+                <p class="author"><span>por:</span> {{ comment.username }}</p>
+              </div>
+        </div>
+        <ng-template #noComments>
+            <p>Não há comemtários</p>
+        </ng-template>
+    </div>
+    <div class="comment-form">
+        <h3>Deixe um comentário</h3>
+        <form [formGroup]="commentForm" #formDir="ngForm" (ngSubmit)="onSubmit(formDir)">
+
+            <div class="form-group">
+                <label for="text">Comentário</label>
+                <textarea formControlName="text" placeholder="O que você gostaria de comentar?" required=""></textarea>
+                <div class="validation-error" *ngIf="text.invalid && formDir.submitted">
+                    <p *ngIf="text.errors?.['required']">O comentário é obrigatório</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Nome:</label>
+                <textarea formControlName="username" placeholder="Diga o seu nome" required></textarea>
+                <div class="validation-error" *ngIf="username.invalid && formDir.submitted">
+                    <p *ngIf="username.errors?.['required']">O nome é obrigatório</p>
+                </div>
+            </div>
+            <input type="submit" value="Comentar!">
+        </form>
     </div>
 </div>
