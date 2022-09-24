@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IMoment } from 'src/app/IMoment';
+import { MessagesService } from 'src/app/services/messages.service';
 import { MomentService } from 'src/app/services/moment.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class EditMomentComponent implements OnInit {
   moment!: IMoment;
   btnText: string = "Editar";
 
-  constructor(private momentService: MomentService, private route: ActivatedRoute) { }
+  constructor(private momentService: MomentService, private route: ActivatedRoute, private messageService: MessagesService, private router: Router) { }
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get("id"));
@@ -20,6 +21,24 @@ export class EditMomentComponent implements OnInit {
     this.momentService.getMoment(id).subscribe((item)=>{
       this.moment = item.data;
     })
+  }
+
+  async editHandler(momentData: IMoment) {
+    const id = this.moment.id
+    const formData = new FormData()
+
+    formData.append('title', momentData.title);
+    formData.append('description', momentData.description);
+
+    if (momentData.image) {
+      formData.append('image', momentData.image)
+    }
+
+    await this.momentService.updateMoment(id!, formData).subscribe()
+
+    this.messageService.add(`Moment ${id} atualizado`)
+
+    this.router.navigate(['/'])
   }
 
 }
